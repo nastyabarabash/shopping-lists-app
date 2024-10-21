@@ -1,2 +1,2 @@
-# *.env
-# app-cache
+*.env
+app-cache
