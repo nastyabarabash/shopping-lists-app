@@ -1,0 +1,22 @@
+<% layout("./layouts/layout.eta") %>
+
+<h1>Shared shopping lists</h1>
+
+<% if (it.lists.length > 0) { %>
+  <p>Shopping lists: <%= it.lists.length %></p>
+<% } else { %>
+    <p>No shopping lists yet.</p>
+<% } %>
+
+
+<% if (it.items && it.items.length > 0) { %>
+  <p>Shopping list items: <%= it.items.length %></p>
+<% } else { %>
+    <p>No shopping list items yet.</p>
+<% } %>
+
+<a href="/lists">
+  <p><form action="/" method="POST">
+    <input type="submit" value="Lists" />
+  </form></p>
+</a>

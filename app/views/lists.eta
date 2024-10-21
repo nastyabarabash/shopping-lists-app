@@ -1,0 +1,51 @@
+<% layout("./layouts/layout.eta") %>
+
+<h2>Add a list</h2>
+
+<form id="add-list-form" action="/lists" method="POST">
+  Name: <input type="text" name="name" />
+  <input type="submit" value="Create list!" />
+</form>
+
+<h2>Active Lists</h2>
+<ul>
+<% const activeLists = it.lists.filter(list => list.active); %>
+<% if (activeLists.length > 0) { %>
+  <% activeLists.forEach((list) => { %>
+    <li id="list-<%= list.id %>">
+      <a href="/lists/<%= list.id %>"><%= list.name %></a>
+      <form id="deactivate" action="/lists/<%= list.id %>/deactivate" method="POST" style="display: inline-block;">
+        <input type="submit" value="Deactivate list!" />
+      </form>
+      <form action="/lists/<%= list.id %>/delete" method="POST" style="display: inline-block;">
+        <input type="submit" value="Delete list" />
+      </form>
+    </li>
+  <% }); %>
+<% } else { %>
+  <li>No active lists found.</li>
+<% } %>
+</ul>
+
+<h2>Inactive Lists</h2>
+<ul>
+<% const inactiveLists = it.lists.filter(list => !list.active); %>
+<% if (inactiveLists.length > 0) { %>
+  <% inactiveLists.forEach((list) => { %>
+    <li id="list-<%= list.id %>">
+      <a href="/lists/<%= list.id %>"><del><%= list.name %></del></a>
+      <form action="/lists/<%= list.id %>/delete" method="POST" style="display: inline-block;">
+        <input type="submit" value="Delete list" />
+      </form>
+    </li>
+  <% }); %>
+<% } else { %>
+  <li>No inactive lists found.</li>
+<% } %>
+</ul>
+
+
+
+<form action="/" method="GET">
+  <input type="submit" value="Main page" />
+</form>

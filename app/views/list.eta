@@ -1,0 +1,40 @@
+<% layout("./layouts/layout.eta") %>
+
+<h1><%= it.list.name %></h1>
+
+<h2>Items</h2>
+
+<h4>Add an item</h4>
+
+<form id="add-list-item" action="/lists/<%= it.shoppingListId %>/items" method="POST">
+  <label for="itemName">Name:</label>
+  <input type="text" id="itemName" name="name" required />
+  <input type="hidden" name="shopping_list_id" value="<%= it.shoppingListId %>" />
+  <input type="submit" value="Add item" />
+</form>
+
+<ul>
+  <% if (it.items && it.items.length > 0) { %>
+    <% it.items.forEach((item) => { %>
+      <li id="item-<%= item.id %>">
+        <% if (item.collected) { %>
+          <del><%= item.name %></del>
+        <% } else { %>
+          <%= item.name %> 
+          <form id="collected" action="/lists/<%= it.list.id %>/items/<%= item.id %>/collect" method="POST" style="display:inline-block;">
+            <input type="submit" value="Mark Collected!" <% if (item.collected) { %> disabled <% } %> />
+          </form>
+        <% } %>
+      </li>
+    <% }); %>
+  <% } else { %>
+    <li>No items found.</li>
+  <% } %>
+</ul>
+
+
+
+
+<form action="/lists" method="GET">
+  <input type="submit" value="Shopping lists" />
+</form>
