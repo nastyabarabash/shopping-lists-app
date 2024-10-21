@@ -5,12 +5,13 @@ test("Lists page has expected headings.", async ({ page }) => {
   await expect(page.locator("h2")).toHaveText(["Add a list", "Active Lists", "Inactive Lists"]);
 });
 
-test('Adding shopping lists is possible', async ({ page }) => {
+test('You can add shopping lists', async ({ page }) => {
   await page.goto('/lists'); 
   const newListName = 'Fruits';
   await page.fill('input[name="name"]', newListName);
-  await page.waitForSelector('form#add-list-form input[type="submit"]', { timeout: 20000 });
-  await page.click('form#add-list-form input[type="submit"]'); 
+  const listForm = 'form#add-list-form input[type="submit"]';
+  await page.waitForSelector(listForm, { timeout: 20000 });
+  await page.click(listForm); 
   await page.waitForURL('/lists'); 
   const listItems = await page.locator('ul > li');
   const itemsCount = await listItems.count();
@@ -19,7 +20,7 @@ test('Adding shopping lists is possible', async ({ page }) => {
   expect(listContainsNewList).toBeGreaterThan(0);
 });
 
-test('Viewing a shopping list is possible', async ({ page }) => {
+test('You can view a shopping list', async ({ page }) => {
   await page.goto('/lists');
   const newListName = "Vegetables";
   await page.fill('input[name="name"]', newListName);
@@ -33,7 +34,7 @@ test('Viewing a shopping list is possible', async ({ page }) => {
   expect(headerText).toContain(newListName);
 });
 
-test('Adding and listing items for a single shopping list is possible', async ({ page }) => {
+test('You can add and list items for a single shopping list', async ({ page }) => {
   await page.goto('/lists');
   const newListName = "Hygiene";
   await page.fill('input[name="name"]', newListName);
@@ -49,7 +50,7 @@ test('Adding and listing items for a single shopping list is possible', async ({
   expect(itemCount).toBeGreaterThan(0);
 });
 
-test('Marking an item as collected is possible', async ({ page }) => {
+test('You can mark an item as collected', async ({ page }) => {
   const listId = 3;
   await page.goto(`/lists/${listId}`);
   const items = await page.locator('ul > li');
