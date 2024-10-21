@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
   app:
-    build: app
+    build: ./app
     image: app
     restart: "no"
     volumes:
